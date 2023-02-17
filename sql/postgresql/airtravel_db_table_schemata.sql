@@ -28,6 +28,7 @@ CREATE TABLE airlines (
 -- SELECT * FROM airlines
 	
 CREATE TABLE flights (
+	index INTEGER,
 	year INTEGER,
 	month INTEGER,
 	day INTEGER,	
@@ -41,7 +42,8 @@ CREATE TABLE flights (
 	air_time FLOAT,
 	distance INTEGER,
 	hour INTEGER,
-	minute INTEGER,	
+	minute INTEGER,
+	PRIMARY KEY (index),
 	FOREIGN KEY (carrier) REFERENCES airlines(airline_id),	
 	FOREIGN KEY (origin) REFERENCES airports(airport_id),
 	FOREIGN KEY (dest) REFERENCES airports(airport_id)
@@ -49,14 +51,14 @@ CREATE TABLE flights (
 	
 -- SELECT * FROM flights
 
--- CREATE TABLE routes (
--- 	airline_id VARCHAR(10),	
--- 	dep_airport_id VARCHAR(10),
--- 	des_airport_id VARCHAR(10),
--- 	stops INTEGER,	
+CREATE TABLE routes (
+	index INTEGER,
+	airline_id VARCHAR(10),	
+	dep_airport_id VARCHAR(10),
+	des_airport_id VARCHAR(10),
+	stops INTEGER,
+	PRIMARY KEY (index)
 -- 	FOREIGN KEY (airline_id) REFERENCES airlines(airline_id),
 -- 	FOREIGN KEY (dep_airport_id) REFERENCES airports(airport_id),
 -- 	FOREIGN KEY (des_airport_id) REFERENCES airports(airport_id)
--- 	);
-
--- SELECT * FROM routes
+	);

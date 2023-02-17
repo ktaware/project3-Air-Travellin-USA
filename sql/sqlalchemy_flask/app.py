@@ -1,6 +1,5 @@
 # Import Dependencies
 import numpy as np
-import datetime as dt
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -11,7 +10,7 @@ from flask import Flask, jsonify
 #################################################
 # Database Setup
 #################################################
-engine = create_engine("sqlite:///../Resources/hawaii.sqlite")
+engine = create_engine("postgresql+psycopg2://postgres:postgres@localhost:5432/airtravel_db")
 
 # reflect an existing database into a new model
 Base = automap_base()
@@ -20,8 +19,10 @@ Base = automap_base()
 Base.prepare(autoload_with=engine)
 
 # Save reference to the table
-Measurement = Base.classes.measurement
-Station = Base.classes.station
+Airlines = Base.classes.airlines
+Airports = Base.classes.airports
+Flights = Base.classes.flights
+Routes = Base.classes.routes
 
 # Create session (link) from Python to the DB 
 session = Session(engine)
@@ -32,17 +33,21 @@ session = Session(engine)
 #################################################
 app = Flask(__name__)
 
-# Create Global variables defining most recent date, date 12 months prior, and most active station
-    # Determine most recent date in the data set
-mosrec_date = session.query(Measurement.date).order_by(Measurement.date.desc()).first()
+# # Create Global variables defining most recent date, date 12 months prior, and most active station
+# define function to convert ORM data into dicts using column headers as keys
+def columns_to_dict(self):
+    dict_ = {}
+    for key in self.__mapper__.c.keys():
+        dict_[key] = getattr(self, key)
+    return dict_
 
-    # Calculate the date one year from the last date in data set.
-prev_year = dt.datetime.strptime(mosrec_date[0], "%Y-%m-%d") - dt.timedelta(days=365)
+#     # Calculate the date one year from the last date in data set.
+# prev_year = dt.datetime.strptime(mosrec_date[0], "%Y-%m-%d") - dt.timedelta(days=365)
 
-    # Query to find the most active station
-most_active = session.query(Measurement.station, func.count(Measurement.tobs)).\
-    group_by(Measurement.station).\
-    order_by(func.count(Measurement.tobs).desc()).first()
+#     # Query to find the most active station
+# most_active = session.query(Measurement.station, func.count(Measurement.tobs)).\
+#     group_by(Measurement.station).\
+#     order_by(func.count(Measurement.tobs).desc()).first()
 
 
 #################################################
@@ -52,110 +57,72 @@ most_active = session.query(Measurement.station, func.count(Measurement.tobs)).\
 def welcome():
     """List all available api routes."""
     return (
-        f"<h2>Welcome to Surf's Up Weather Alchemy!</h2>"
-        f"<b>Available Routes:</b><br>"
-        f"/api/v1.0/precipitation<br>"
-        f"<i>(Date and precipitation amounts from the most recent 12 months of available data)</i><br><br>"
+        f"<h1>Welcome to Fly High Memberships!</h1>"
+        f"<h2>Where we'll take you to the best airline to take you anywhere!</h2><br><br>"
+        f"<b>Available Routes:</b><br><br>"
+        f"/api/v1.0/airlines<br>"
+        f"<i>(Information about each Airline, including: Airline Name, ID, Country of Origin, Active Status)</i><br><br>"
 
-        f"/api/v1.0/stations<br>"
-        f"<i>(A list of our observation stations)</i><br><br>"
+        f"/api/v1.0/airports<br>"
+        f"<i>(A list of all the airports around the globe)</i><br><br>"
 
-        f"/api/v1.0/tobs<br>"
-        f"<i>(Temperature observations from the most recent 12 months of available data at our most active station)</i><br><br>"
+        f"/api/v1.0/flights<br>"
+        f"<i>(A list of all flights out of NYC)</i><br><br>"
 
-        f"/api/v1.0/<start><br>"
-        f"<i>(Find the minimum, average and max temperature since a given start day)</i><br><br>"
-
-        f"/api/v1.0/<start>/<end><br>"
-        f"<i>(Find the minimum, average and max temperature for a given range of days - start to end)</i><br><br>"
+        f"/api/v1.0/routes<br>"
+        f"<i>(A list of all air traffic routes around the globe)</i><br><br>"
     )
 
 
-# Setup precipitation Route
-@app.route("/api/v1.0/precipitation")
-def precipitation():  
-    """Return a JSON representation of a dictionary for precipitation within the most recent 12 months"""
-    # Query date and precipitation values for the most recent year of data only    
-    prevyear_prcp = session.query(Measurement.date, Measurement.prcp).\
-    filter(Measurement.date >= prev_year).\
-    order_by(Measurement.date).all()
-
+# Setup airlines Route
+@app.route("/api/v1.0/airlines")
+def airlines():  
+    """Return a JSON representation of a dictionary for airlines"""
+    airlines_dict = [columns_to_dict(row) for row in session.query(Airlines).all()]
+    return jsonify(airlines_dict)
+    
+    # test = []
+    # Query airline_id and airline_name    
+    # airlines_info = session.query(Airlines.airline_id, Airlines.airline_name, Airlines.origin_country, Airlines.active).all()
+    # airlines_info = session.query(Airlines.airline_id).all()
+    # for u in session.query(Airlines).all():
+    #     test.a = u.__dict__
+    # airlines_info = session.query(Airlines.airline_id, Airlines.airline_name).all()
     # Convert queried list of tuples into dictionary with date as key and prcp as value
-    prevyear_precipitation = dict((x, y) for x, y in prevyear_prcp)    
+    # airlines_dict = dict((x, y) for x, y in airlines_info)    
+    # airlines_dict = dict(("id", x) for x in airlines_info)    
+    # airlines_list = list(np.ravel(airlines_info))
 
-    return jsonify(prevyear_precipitation)
-
-
-# Setup stations Route
-@app.route("/api/v1.0/stations")
-def stations():
-    """Return a JSON list of all stations"""
-    # Query all stations
-    station_data = session.query(Station.name).all()
-
-    # Convert queried list of tuples into normal list
-    all_stations = list(np.ravel(station_data))
-
-    return jsonify(all_stations)
+    # return jsonify(airlines_list)
+    # return jsonify(test)
 
 
-# Setup tobs Route
-@app.route("/api/v1.0/tobs")
-def tobs():
-    """Return tobs data for only the past year of the most active station"""  
-    # Query only the most active station's tobs for the most recent year of data
-    tobs_data = session.query(Measurement.date, Measurement.tobs).\
-    filter(Measurement.station == most_active[0]).\
-    filter(Measurement.date >= prev_year).all()
-
-    # Convert queried list of tuples into dictionary with date as key and tobs as value
-    most_active_station = dict((x, y) for x, y in tobs_data)    
-    # most_active_station = list(np.ravel(results))
-
-    return jsonify(most_active_station)
+# Setup airports Route
+@app.route("/api/v1.0/airports")
+def airports():  
+    """Return a JSON representation of a dictionary for airports"""
+    airports_dict = [columns_to_dict(row) for row in session.query(Airports).all()]
+    return jsonify(airports_dict)
 
 
-# Setup <start> Route
-@app.route("/api/v1.0/<start>")
-def start_temps(start):
-    """Return a JSON list of the tmin, tavg, and tmax temperatures for the range 
-    beginning from the date variable supplied by the user.""" 
-    # Query list for tmin, tavg & tmax temps    
-    defsel = [func.min(Measurement.tobs),
-        func.avg(Measurement.tobs),
-        func.max(Measurement.tobs)]
-    
-    # Query data by unpacking query list and using user provided start date 
-    start_range = session.query(*defsel).\
-        filter(Measurement.date >= start).all()
-    
-    # Convert queried list of tuples into normal list
-    start_results = list(np.ravel(start_range))
-
-    return jsonify(start_results)       
+# Setup flights Route
+@app.route("/api/v1.0/flights")
+def flights():  
+    """Return a JSON representation of a dictionary for flights"""
+    flights_dict = [columns_to_dict(row) for row in session.query(Flights).all()]
+    return jsonify(flights_dict)
 
 
-# Setup <start>/<end> Route
-@app.route("/api/v1.0/<start>/<end>")
-def start_end_temps(start, end):
-    """Return a JSON list of the tmin, tavg, and tmax temperatures for the range 
-    beginning from the start date to the end date variables supplied by the user.""" 
-    # Create Query list for tmin, tavg & tmax temps    
-    defsel = [func.min(Measurement.tobs),
-        func.avg(Measurement.tobs),
-        func.max(Measurement.tobs)]
-    
-    # Query data by unpacking query list and using user provided start and end dates
-    start_end_range = session.query(*defsel).\
-        filter(Measurement.date >= start).\
-        filter(Measurement.date <= end).all()
+# Setup routes Route
+@app.route("/api/v1.0/routes")
+def routes():  
+    """Return a JSON representation of a dictionary for routes"""
+    routes_dict = [columns_to_dict(row) for row in session.query(Routes).all()]
+    return jsonify(routes_dict)    
 
-    # Convert queried list of tuples into normal list
-    start_end_results = list(np.ravel(start_end_range))
-
-    return jsonify(start_end_results)  
 
 session.close()
+
 
 if __name__ == '__main__':
     app.run(debug=True)
