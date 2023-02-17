@@ -5,11 +5,11 @@ Theme: Best airlines to be a member of if we live in NYC (regardless of price) t
 HTML landing page with 2 pages: 
 
 1. Map visual
-  A. Map of air routes by airline (airlines as optional overlay layers) with curve line routes from the 3 NY airports using Leaflet.Curve plug-in;
+  A. [SAM] Map of air routes by airline (airlines as optional overlay layers) with curve line routes from the 3 NY airports using Leaflet.Curve plug-in;
   Markers/popups for each airport with name of the airport and any other info we can add (such as # of flights in/out) 
-  B (if we have time) Heat map of the busiest airports/destinations
+  B [TERRY] Heat map of the busiest airports/destinations
   
 2. Dashboard: Drop-down filter for airlines
-  A. bar graph of volume of flights for destinations
-  B. pie chart of on-time/late/cancelled flights by airline (web scraped https://jfkairport.net/statistics/)
+  A. [KOMAL] bar graph of volume of flights for destinations
+  B. [NIMRA] pie chart of on-time/late/cancelled flights by airline (web scraped https://jfkairport.net/statistics/)
   
