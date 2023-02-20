@@ -23,6 +23,8 @@ Airlines = Base.classes.airlines
 Airports = Base.classes.airports
 Flights = Base.classes.flights
 Routes = Base.classes.routes
+All_Flights = Base.classes.all_flights
+
 
 # Create session (link) from Python to the DB 
 session = Session(engine)
@@ -67,8 +69,11 @@ def welcome():
         f"<i>(A list of all the airports around the globe)</i><br><br>"
 
         f"/api/v1.0/flights<br>"
-        f"<i>(A list of all flights out of NYC)</i><br><br>"
+        f"<i>(A list of domestic flights out of NYC)</i><br><br>"
 
+        f"/api/v1.0/all_flights<br>"
+        f"<i>(A list of all flight routes out of NYC)</i><br><br>"
+        
         f"/api/v1.0/routes<br>"
         f"<i>(A list of all air traffic routes around the globe)</i><br><br>"
     )
@@ -111,6 +116,14 @@ def flights():
     """Return a JSON representation of a dictionary for flights"""
     flights_dict = [columns_to_dict(row) for row in session.query(Flights).all()]
     return jsonify(flights_dict)
+
+
+# Setup all_flights Route
+@app.route("/api/v1.0/all_flights")
+def all_flights():  
+    """Return a JSON representation of a dictionary for flights"""
+    all_flights_dict = [columns_to_dict(row) for row in session.query(All_Flights).all()]
+    return jsonify(all_flights_dict)
 
 
 # Setup routes Route

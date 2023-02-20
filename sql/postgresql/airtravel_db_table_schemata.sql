@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS airlines CASCADE;
 DROP TABLE IF EXISTS routes CASCADE;
 DROP TABLE IF EXISTS airports CASCADE;
 DROP TABLE IF EXISTS flights CASCADE;
+DROP TABLE IF EXISTS all_flights CASCADE;
 
 -- Create new tables to import data
 CREATE TABLE airports (
@@ -34,7 +35,7 @@ CREATE TABLE flights (
 	day INTEGER,	
 	sched_dep_time INTEGER,	
 	sched_arr_time INTEGER,
-	carrier	VARCHAR(10),
+	airline_id VARCHAR(10),
 	flight INTEGER,
 	tailnum VARCHAR(10),
 	origin VARCHAR(10),
@@ -44,7 +45,7 @@ CREATE TABLE flights (
 	hour INTEGER,
 	minute INTEGER,
 	PRIMARY KEY (index),
-	FOREIGN KEY (carrier) REFERENCES airlines(airline_id),	
+	FOREIGN KEY (airline_id) REFERENCES airlines(airline_id),	
 	FOREIGN KEY (origin) REFERENCES airports(airport_id),
 	FOREIGN KEY (dest) REFERENCES airports(airport_id)
 	);
@@ -61,4 +62,21 @@ CREATE TABLE routes (
 -- 	FOREIGN KEY (airline_id) REFERENCES airlines(airline_id),
 -- 	FOREIGN KEY (dep_airport_id) REFERENCES airports(airport_id),
 -- 	FOREIGN KEY (des_airport_id) REFERENCES airports(airport_id)
+	);
+	
+CREATE TABLE all_flights (
+	index INTEGER,
+	year INTEGER,	
+	dep_airport VARCHAR(10),
+	des_airport VARCHAR(10),
+	alid INTEGER,
+	airline_id VARCHAR(10),
+	dom_fgn INTEGER,
+	scheduled INTEGER,
+	chartered INTEGER,
+	total INTEGER,	
+	PRIMARY KEY (index),
+	FOREIGN KEY (airline_id) REFERENCES airlines(airline_id),	
+	FOREIGN KEY (dep_airport) REFERENCES airports(airport_id),
+	FOREIGN KEY (des_airport) REFERENCES airports(airport_id)
 	);
