@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
   padding: 0;
   margin: 0;
@@ -5,4 +6,13 @@ body {
   html, body, #map {
   height: 100%;
   width: 100vw;
+=======
+body {
+  padding: 0;
+  margin: 0;
+  }
+  html, body, #map {
+  height: 100%;
+  width: 100vw;
+>>>>>>> c47801dd2537fdc071fcdf3c42af49cba01f08a7
   }
