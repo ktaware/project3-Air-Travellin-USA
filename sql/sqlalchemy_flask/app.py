@@ -21,8 +21,11 @@ Base.prepare(autoload_with=engine)
 # Save reference to the table
 Airlines = Base.classes.airlines
 Airports = Base.classes.airports
-Flights = Base.classes.flights
-Routes = Base.classes.routes
+Dom_Flights = Base.classes.dom_flights
+Int_Flights = Base.classes.int_flights
+Flight_Routes = Base.classes.flight_routes
+
+
 
 # Create session (link) from Python to the DB 
 session = Session(engine)
@@ -66,10 +69,13 @@ def welcome():
         f"/api/v1.0/airports<br>"
         f"<i>(A list of all the airports around the globe)</i><br><br>"
 
-        f"/api/v1.0/flights<br>"
-        f"<i>(A list of all flights out of NYC)</i><br><br>"
+        f"/api/v1.0/dom_flights<br>"
+        f"<i>(A list of domestic flights out of NYC)</i><br><br>"
 
-        f"/api/v1.0/routes<br>"
+        f"/api/v1.0/int_flights<br>"
+        f"<i>(A list of international flight routes out of NYC)</i><br><br>"
+        
+        f"/api/v1.0/flight_routes<br>"
         f"<i>(A list of all air traffic routes around the globe)</i><br><br>"
     )
 
@@ -105,20 +111,37 @@ def airports():
     return jsonify(airports_dict)
 
 
-# Setup flights Route
-@app.route("/api/v1.0/flights")
+# Setup dom_flights Route
+@app.route("/api/v1.0/dom_flights")
 def flights():  
     """Return a JSON representation of a dictionary for flights"""
-    flights_dict = [columns_to_dict(row) for row in session.query(Flights).all()]
-    return jsonify(flights_dict)
+    dom_flights_dict = [columns_to_dict(row) for row in session.query(Dom_Flights).all()]
+    return jsonify(dom_flights_dict)
 
 
-# Setup routes Route
-@app.route("/api/v1.0/routes")
-def routes():  
+# Setup int_flights Route
+@app.route("/api/v1.0/int_flights")
+def int_flights():  
+    """Return a JSON representation of a dictionary for flights"""
+    int_flights_dict = [columns_to_dict(row) for row in session.query(Int_Flights).all()]
+    return jsonify(int_flights_dict)
+
+
+# Setup flight_routes Route
+@app.route("/api/v1.0/flight_routes")
+def flight_routes():  
     """Return a JSON representation of a dictionary for routes"""
-    routes_dict = [columns_to_dict(row) for row in session.query(Routes).all()]
-    return jsonify(routes_dict)    
+    flight_routes_dict = [columns_to_dict(row) for row in session.query(Flight_Routes).all()]
+    return jsonify(flight_routes_dict)    
+
+# Step 5  (Setup traffic density Route)
+@app.route("/api/v1.0/traffic_density")
+def traffic_density():  
+    """Return a JSON representation of a dictionary for airports"""    
+    density = session.query(Dom_Flights.des_airport, func.sum(Dom_Flights.total)).group_by(Dom_Flights.des_airport).all()
+    # alldom_flights = [columns_to_dict(row) for row in session.query(Dom_Flights.des_airport, func.sum(Dom_Flights.total)).group_by(Dom_Flights.des_airport).all()]
+    # density = [columns_to_dict(row) for row in session.query(Dom_Flights.des_airport, func.sum(Dom_Flights.total)).group_by(Dom_Flights.des_airport).all()]    
+    return jsonify(density)
 
 
 session.close()
