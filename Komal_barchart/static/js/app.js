@@ -2,6 +2,7 @@
 var airports = [];
 var airlines = [];
 var flights = [];
+var routs = [];
 function init() {
 // Fetch the JSON data and console log it
 d3.json("http://localhost:8000/static/js/airport.json").then(function(_airports) {
@@ -17,6 +18,9 @@ d3.json("http://localhost:8000/static/js/airport.json").then(function(_airports)
           .text(airport.airport_name)
           .property("value", airport.airport_id);
         });
+
+      var firstairport = airports[0];
+      buildairport(firstairport);
      });
     });
 });
@@ -72,9 +76,23 @@ function buildairport(airportId) {
 
     // 9. Create the layout for the bar chart. 
     var barLayout = {
-     title: {text: "<b> Top 10 Bacteria Cultures Found </b>"},
+     title: {text: "<b> Airline count for each destination </b>"},
     };
     // 10. Use Plotly to plot the data with the layout. 
     Plotly.newPlot("bar", barData, barLayout);
+
+    let piedata = [{
+      values: vals,
+      labels: keys,
+      type: "pie"
+    }];
+  
+    let pielayout = {
+      height: 400,
+      width: 400
+    };
+  
+    Plotly.newPlot("pie", piedata, pielayout);
 }
+
 
