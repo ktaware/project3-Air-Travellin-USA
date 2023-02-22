@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS airports CASCADE;
 DROP TABLE IF EXISTS dom_flights CASCADE;
 DROP TABLE IF EXISTS int_flights CASCADE;
 DROP TABLE IF EXISTS flight_routes CASCADE;
+DROP TABLE IF EXISTS flights_airports CASCADE;
 
 
 -------------------------------------------
@@ -85,3 +86,26 @@ CREATE TABLE flight_routes (
 	);
 	
 	SELECT * FROM flight_routes;
+	
+	
+-------------------------------------------
+-- Create all global flight routes table not limited to NYC to import data
+CREATE TABLE flights_airports (
+	airline_id VARCHAR(10),	
+	dep_airport_id VARCHAR(10),
+	des_airport_id VARCHAR(10),
+	dep_name VARCHAR(70),
+	dep_city VARCHAR(70),
+	dep_country VARCHAR(70),	
+	dep_latitude VARCHAR(20),
+	dep_longitude VARCHAR(20),
+	des_name VARCHAR(70),
+	des_city VARCHAR(70),
+	des_country VARCHAR(70),	
+	airport_id VARCHAR(10),
+	des_latitude VARCHAR(20),
+	des_longitude VARCHAR(20),		
+	PRIMARY KEY (airline_id, dep_airport_id, des_airport_id)
+	);
+	
+	SELECT * FROM flights_airports;
