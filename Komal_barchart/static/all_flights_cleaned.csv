@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 index,year,dep_airport,des_airport,alid,airline_id,dom_fgn,scheduled,chartered,total
 0,2019,EWR,BDA,20313,W8,0,0,46,46
 1,2019,EWR,SAW,21134,0J,0,0,2,2
@@ -10102,4 +10102,4 @@ index,year,dep_airport,des_airport,alid,airline_id,dom_fgn,scheduled,chartered,t
 5047,2019,EWR,YTZ,21226,PD,0,751,0,751
 5048,2019,JFK,PTY,19770,CM,0,756,0,756
 5049,2019,EWR,YTZ,21226,PD,0,767,0,767
->>>>>>> c47801dd2537fdc071fcdf3c42af49cba01f08a7
+
