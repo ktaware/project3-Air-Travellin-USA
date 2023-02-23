@@ -27,7 +27,7 @@ Airlines = Base.classes.airlines
 Airports = Base.classes.airports
 Dom_Flights = Base.classes.dom_flights
 Int_Flights = Base.classes.int_flights
-Flight_Routes = Base.classes.flight_routes
+Flights_Airports = Base.classes.flights_airports
 
 # Create session (link) from Python to the DB 
 session = Session(engine)
@@ -83,7 +83,14 @@ def nycdom_airports():
     return jsonify(nycdom_airports)
 
 
-# Step 5  (Setup traffic density Route)
+# Step 5  (Setup NYC flight paths (Flights_Airports) Route)
+@app.route("/api/v1.0/flights_airports")
+def flights_airports():  
+    """Return a JSON representation of a dictionary for airports"""    
+    flights_paths = [columns_to_dict(row) for row in session.query(Flights_Airports).all()]
+    return jsonify(flights_paths)
+    
+# Step 6  (Setup traffic density Route)
 @app.route("/api/v1.0/traffic_density")
 def traffic_density():  
     """Return a JSON representation of a dictionary for airports"""    
