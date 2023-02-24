@@ -87,22 +87,9 @@ def nycdom_airports():
 @app.route("/api/v1.0/flights_airports")
 def flights_airports():  
     """Return a JSON representation of a dictionary for airports"""    
-    flights_paths = [columns_to_dict(row) for row in session.query(Flights_Airports).all()]
+    flights_paths = [columns_to_dict(row) for row in session.query(Flights_Airports).order_by((Flights_Airports.total).desc()).all()]
     return jsonify(flights_paths)
     
-# Step 6  (Setup traffic density Route)
-@app.route("/api/v1.0/traffic_density")
-def traffic_density():  
-    """Return a JSON representation of a dictionary for airports"""    
-    density = session.query(Dom_Flights.des_airport, func.sum(Dom_Flights.total)).group_by(Dom_Flights.des_airport).all()
-    results = [tuple(row) for row in density]
-    # resulters = [tuple(row) for row in results]
-    resulters = [dict((x, y) for x, y in results)]
-    return jsonify(resulters)
-    # alldom_flights = [columns_to_dict(row) for row in session.query(Dom_Flights.des_airport, func.sum(Dom_Flights.total)).group_by(Dom_Flights.des_airport).all()]
-    # density = [columns_to_dict(row) for row in session.query(Dom_Flights.des_airport, func.sum(Dom_Flights.total)).group_by(Dom_Flights.des_airport).all()]    
-    # return jsonify(density)
-
 
 # Close session
 session.close()

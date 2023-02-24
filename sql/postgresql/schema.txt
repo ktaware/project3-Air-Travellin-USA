@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS airports CASCADE;
 DROP TABLE IF EXISTS dom_flights CASCADE;
 DROP TABLE IF EXISTS int_flights CASCADE;
 DROP TABLE IF EXISTS flight_routes CASCADE;
+DROP TABLE IF EXISTS flights_airports CASCADE;
 
 
 -------------------------------------------
@@ -37,25 +38,16 @@ CREATE TABLE airlines (
 -------------------------------------------
 -- Create domestic flights table to import data
 CREATE TABLE dom_flights (
-	index INTEGER,
-	year INTEGER,
-	month INTEGER,
-	day INTEGER,	
-	sched_dep_time INTEGER,	
-	sched_arr_time INTEGER,
-	airline_id VARCHAR(10),
-	flight INTEGER,
-	tailnum VARCHAR(10),
-	origin VARCHAR(10),
-	dest VARCHAR(10),
-	air_time FLOAT,
-	distance INTEGER,
-	hour INTEGER,
-	minute INTEGER,
-	PRIMARY KEY (index),
+	id INTEGER,
+	date DATE,			
+	airline_id VARCHAR(10),	
+	dep_airport VARCHAR(10),
+	des_airport VARCHAR(10),
+	total INTEGER,	
+	PRIMARY KEY (id),
 	FOREIGN KEY (airline_id) REFERENCES airlines(airline_id),	
-	FOREIGN KEY (origin) REFERENCES airports(airport_id),
-	FOREIGN KEY (dest) REFERENCES airports(airport_id)
+	FOREIGN KEY (dep_airport) REFERENCES airports(airport_id),
+	FOREIGN KEY (des_airport) REFERENCES airports(airport_id)
 	);
 	
 SELECT * FROM dom_flights;
@@ -64,17 +56,13 @@ SELECT * FROM dom_flights;
 -------------------------------------------
 -- Create international flights table to import data
 CREATE TABLE int_flights (
-	index INTEGER,
-	year INTEGER,	
+	id INTEGER,
+	date DATE,	
 	dep_airport VARCHAR(10),
-	des_airport VARCHAR(10),
-	alid INTEGER,
-	airline_id VARCHAR(10),
-	dom_fgn INTEGER,
-	scheduled INTEGER,
-	chartered INTEGER,
+	des_airport VARCHAR(10),	
+	airline_id VARCHAR(10),	
 	total INTEGER,	
-	PRIMARY KEY (index),
+	PRIMARY KEY (id),
 	FOREIGN KEY (airline_id) REFERENCES airlines(airline_id),	
 	FOREIGN KEY (dep_airport) REFERENCES airports(airport_id),
 	FOREIGN KEY (des_airport) REFERENCES airports(airport_id)
@@ -98,3 +86,28 @@ CREATE TABLE flight_routes (
 	);
 	
 	SELECT * FROM flight_routes;
+	
+	
+-------------------------------------------
+-- Create all global flight routes table not limited to NYC to import data
+CREATE TABLE flights_airports (
+	airline_id VARCHAR(10),	
+	dep_airport_id VARCHAR(10),
+	des_airport_id VARCHAR(10),
+	dep_name VARCHAR(70),
+	dep_city VARCHAR(70),
+	dep_country VARCHAR(70),	
+	dep_latitude VARCHAR(20),
+	dep_longitude VARCHAR(20),
+	total INTEGER,
+	des_name VARCHAR(70),
+	des_city VARCHAR(70),
+	des_country VARCHAR(70),	
+	airport_id VARCHAR(10),
+	des_latitude VARCHAR(20),
+	des_longitude VARCHAR(20),		
+	des_altitude INTEGER,		
+	PRIMARY KEY (airline_id, dep_airport_id, des_airport_id)
+	);
+	
+	SELECT * FROM flights_airports;

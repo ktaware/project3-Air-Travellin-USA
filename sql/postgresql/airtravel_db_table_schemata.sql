@@ -99,12 +99,14 @@ CREATE TABLE flights_airports (
 	dep_country VARCHAR(70),	
 	dep_latitude VARCHAR(20),
 	dep_longitude VARCHAR(20),
+	total INTEGER,
 	des_name VARCHAR(70),
 	des_city VARCHAR(70),
 	des_country VARCHAR(70),	
 	airport_id VARCHAR(10),
 	des_latitude VARCHAR(20),
 	des_longitude VARCHAR(20),		
+	des_altitude INTEGER,		
 	PRIMARY KEY (airline_id, dep_airport_id, des_airport_id)
 	);
 	
