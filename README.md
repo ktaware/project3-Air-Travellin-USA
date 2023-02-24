@@ -13,3 +13,4 @@ HTML landing page with 2 pages:
   A. [KOMAL] bar graph of volume of flights for destinations
   B. [NIMRA] pie chart of on-time/late/cancelled flights by airline (web scraped https://jfkairport.net/statistics/)
   
+PRESENTATION LINK: https://docs.google.com/presentation/d/1MG3JPl2o1v6_9uyvitNAErBOgpETSVxQZbuoRyTFhaA/edit?usp=sharing
