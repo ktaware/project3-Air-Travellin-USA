@@ -1,5 +1,46 @@
 // Data source
 const url = 'http://127.0.0.1:5000/api/v1.0/flights_airports'
+// var url = 'https://raw.githubusercontent.com/ktaware/project3/main/visualizations/flask-java-python-test/static/js/flights_airports.js'
+// var url = '../js/flights_airports.js'
+
+var data2 = [
+    {
+      "airline_id": "AC", 
+      "airport_id": "YYZ", 
+      "dep_airport_id": "EWR", 
+      "dep_city": "Newark", 
+      "dep_country": "United States", 
+      "dep_latitude": "40.69250107", 
+      "dep_longitude": "-74.16870117", 
+      "dep_name": "Newark Liberty International Airport", 
+      "des_airport_id": "YYZ", 
+      "des_altitude": 569, 
+      "des_city": "Toronto", 
+      "des_country": "Canada", 
+      "des_latitude": "43.67720032", 
+      "des_longitude": "-79.63059998", 
+      "des_name": "Lester B. Pearson International Airport", 
+      "total": 34610
+    },
+    {
+    "airline_id": "AC", 
+    "airport_id": "EWR", 
+    "dep_airport_id": "YYZ", 
+    "dep_city": "Toronto", 
+    "dep_country": "Canada", 
+    "dep_latitude": "43.67720032", 
+    "dep_longitude": "-79.63059998", 
+    "dep_name": "Lester B. Pearson International Airport", 
+    "des_airport_id": "EWR", 
+    "des_altitude": 569, 
+    "des_city": "Newark", 
+    "des_country": "United States", 
+    "des_latitude": "40.69250107", 
+    "des_longitude": "-74.16870117", 
+    "des_name": "Newark Liberty International Airport", 
+    "total": 34610
+      }
+]
 
 // A function to determine the marker size based on the population
 function markerSize(traffic) {
@@ -8,19 +49,28 @@ function markerSize(traffic) {
 
 // Define a trafficColor function to color code markers based on density of air traffic
 function trafficColor(traffic) {
-if (traffic < 500) return "#00ff00";
-else if (traffic < 1000) return "#ccff00";
-else if (traffic < 2500) return "#ffff00";
-else if (traffic < 5000) return "#ffdd00";
-else if (traffic < 10000) return "#ffaa00";
-else return "#ff0000";
-}
+    if (traffic < 500) return "#00ff00";
+    else if (traffic < 1000) return "#ccff00";
+    else if (traffic < 2500) return "#ffff00";
+    else if (traffic < 5000) return "#ffdd00";
+    else if (traffic < 10000) return "#ffaa00";
+    else return "#ff0000";
+    }
 
-var airTraffic = []
+
+
+// An array that will store the created cityMarkers
+var testcities = []
+var testroutes = []
+
+// // fetch all nyc flight paths
+// fetch('/api/v1.0/flights_airports').then(function (response) {        
+//     return response.json();        
+// }).then(function (text) {
+//     console.log(text)    
 
 d3.json(url).then(function(data) {
-    console.log(data)
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < data.length; i++) {        
         var des_latitude = data[i].des_latitude;
         var des_longitude = data[i].des_longitude;
         var traffic = data[i].total;
@@ -29,238 +79,125 @@ d3.json(url).then(function(data) {
         <strong>Location:</strong> ${data[i].des_city}, ${data[i].des_country}<br>
         <strong>Coordinates: </strong>${des_latitude}, ${des_longitude}<br>
         <strong>Altitude: </strong>${data[i].des_altitude}<br>`;            
-        // console.log(latitude);
-        // console.log(longitude);
         if (location) {
-            airTraffic.push(
-                L.circleMarker([des_latitude, des_longitude], {
-                    stroke: true,        
-                    weight: 2,
-                    color: "#ffffff",
-                    opacity: .9,        
-                    fillColor: trafficColor(traffic),
-                    fillOpacity: 0.1,
-                    radius: markerSize(traffic)
-                }) 
-            );
-        }
+            testcities.push(
+                L.circle([data[i].des_latitude, data[i].des_longitude], {
+                stroke: true,        
+                weight: 2,
+                color: "#ffffff",
+                opacity: .9,        
+                fillColor: trafficColor(traffic),
+                fillOpacity: 0.5,
+                radius: 10000
+            }).bindPopup(popupText));              
+            // }).addTo(myMap).bindPopup(popupText));          
+        }        
     }
+    
+    for (var i=0; i < data.length; i++) {
+
+        var lat1 = data[i].dep_latitude;
+        var lng1 = data[i].dep_longitude;
+        var lat2 = data[i].des_latitude;
+        var lng2 = data[i].des_longitude;
+        var latlng1 = [lat1,lng1];
+        var latlng2 = [lat2,lng2];
+
+        var depAirport = data[i].dep_airport_id;
+
+        var endcity = data[i].des_city;
+        var endcountry = data[i].des_country;
+        var endairport = data[i].des_airport_id;
+        var fromairport = data[i].dep_airport_id;
+        var airportname = data[i].dep_name;
+        var airline = data[i].airline_id;
+
+        var latlngs = [];
+
+        var offsetX = latlng2[1] - latlng1[1],
+            offsetY = latlng2[0] - latlng1[0];
+        
+        var r = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)),
+            theta = Math.atan2(offsetY, offsetX);
+
+        var thetaOffset = (3.14/10);
+
+        var r2 = (r/2)/(Math.cos(thetaOffset)),
+            theta2 = theta + thetaOffset;
+        
+        var midpointX = (r2 * Math.cos(theta2)) + (1*latlng1[1]),
+            midpointY = (r2 * Math.cos(theta2)) +(1*latlng1[0]);
+
+        var midpointLatLng =  [midpointY, midpointX];
+        
+        latlngs.push(latlng1, midpointLatLng, latlng2);
+        
+        var airportcolour = "#884EA0";
+        if (depAirport === "EWR") airportcolour = "#148F77";
+            else if (depAirport === "LGA")
+            airportcolour = "#E67E22"
+            else airportcolour = "#884EA0";
+
+        var pathOptions = {
+            color: airportcolour, 
+            weight: 1};
+        
+        testroutes.push(
+            L.curve(
+                ['M', latlng1,
+                'Q', midpointLatLng,
+                latlng2],
+                pathOptions
+            )            
+        .bindPopup(`<h1>Destination: ${endcity}, ${endcountry} ${endairport}</h1> <hr> <h2>From: ${airportname} ${fromairport}</h2> <hr> <h3>Airline: ${airline}</h3>`))
+        // .addTo(myMap);
+    }
+
 });
 
-createMap(earthquakes)
-    
-    
-// var myMap = L.map('map', {// .fitWorld();
-//       center: [40.7128, -74.0060],
-//       zoom: 11
-//     });
-    
-
-// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(myMap);
-
+console.log(testcities)
 
 //-------------------------------------------------//
 
 
-// Define createMap function to establish base layers, overlays and legend
-function createMap(earthquakes) {
-    // Create the base/tile layers that will be the background of our map
-    var streetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
-    
-    // Create a baseMaps object to hold our base layers
-    var baseMaps = {
-        "Street": streetMap    
-    };
+// Create two separate layer groups: one for the city markers and another for the state markers.
+var routesLayer = L.layerGroup(testroutes);
+var trafficLayer = L.layerGroup(testcities);
 
-    // Create an overlays object to hold our overlay layers
-    var overlayMaps = {
-        // "Flight Routes": routes,
-        "Air Traffic Density": airTraffic
-    };
+// Define the base layers.
+var street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+})
 
-    var myMap = L.map('map', {// .fitWorld();
-        center: [40.7128, -74.0060],
-        zoom: 11,
-        layers: [streetMap, airTraffic]
-    });
-    
-    // Create a control for our layers, and pass it our baseMaps and overlayMaps objects
-    L.control.layers(baseMaps, overlayMaps, {
-        collapsed: false
-    }).addTo(myMap);
-    
-    // Declare and set up the legend
-    var legend = L.control({
-        position: "bottomright" 
-    });
-    
-    // Provide legend information and labels
-    legend.onAdd = function() {
-        var div = L.DomUtil.create("div", "info legend");
-        var depths = [-10, 10, 20, 50, 70, 90];
-        var colors = ["#00ff00", "#ccff00", "#ffff00", "#ffdd00", "#ffaa00", "#ff0000"];
-        var labels = [];  
-        // Reference css to format legend
-        for (var i = 0; i < depths.length; i++) {
-            labels.push(
-                "<i style ='background: " + colors[i] + "'></i> " + 
-                depths[i] + (depths[i + 1] ? "&ndash;" + depths[i + 1] + "<br>" : "+")
-            )
-        }       
-        // Use .join to add pushed label information to legend and add to the created div for the legend 
-        div.innerHTML = labels.join('');
-        return div;
-    }
-    
-    // Add the legend to the map
-    legend.addTo(myMap); 
-};   
+var topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+	attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+});
 
+// Create two separate layer groups: one for the city markers and another for the state markers.
+var routesLayer = L.layerGroup(testroutes);
+var trafficLayer = L.layerGroup(testcities);
 
-    // d3.json(url).then(function(text) {
-    // for (var i = 0; i < text.length; i++) {
-    //     var des_latitude = text[i].des_latitude;
-    //     var des_longitude = text[i].des_longitude;
-    //     var traffic = text[i].total;
-    //     var popupText = `<strong> ${text[i].des_name} / ${text[i].des_airport_id}</strong><hr>
-    //     <strong>Total NYC Flights Inbound: </strong>${traffic}<br>
-    //     <strong>Location:</strong> ${text[i].des_city}, ${text[i].des_country}<br>
-    //     <strong>Coordinates: </strong>${des_latitude}, ${des_longitude}<br>
-    //     <strong>Altitude: </strong>${text[i].des_altitude}<br>`;            
-    //     // console.log(latitude);
-    //     // console.log(longitude);
-    //     if (location) {
-    //     L.circleMarker([des_latitude, des_longitude], {
-    //         stroke: true,        
-    //         weight: 2,
-    //         color: "#ffffff",
-    //         opacity: .9,        
-    //         fillColor: trafficColor(traffic),
-    //         fillOpacity: 0.1,
-    //         radius: markerSize(traffic)
-    //     }).addTo(myMap).bindPopup(popupText);          
-    //     }
-    // }      
-    // });
-    
-// // fetch nyc to international airports
-// fetch('/api/v1.0/nycint_airports').then(function (response) {
-// // console.log(response)
-// return response.json();        
-// }).then(function (text) {
-// console.log(text); // Print the text as JSON 
-// // console.log(JSON.stringify(text)) // Prints the above as plain text in console
-// for (var i = 0; i < text.length; i++) {
-//     var latitude = text[i].latitude;
-//     var longitude = text[i].longitude;
-//     var popupText = `<strong> ${text[i].airport_name}</strong><hr>
-//     <strong>Location:</strong> ${text[i].city}, ${text[i].country}<br>
-//     <strong>Coordinates: </strong>${latitude}, ${longitude}<br>    
-//     <strong>Altitude: </strong>${text[i].altitude}<br>`;
-//     // console.log(latitude);
-//     // console.log(longitude);
-//     if (location) {
-//     L.circleMarker([latitude, longitude], {
-//         stroke: true,        
-//         weight: 1,
-//         color: "#000000",
-//         opacity: .4,        
-//         fillColor: "#0000ff",
-//         fillOpacity: 0.4,
-//         radius: (4)
-//     }).addTo(myMap).bindPopup(popupText);          
-//     }
-// }      
-// });
-
-
-// // fetch nyc to domestic airports
-// fetch('/api/v1.0/nycdom_airports').then(function (response) {
-// // console.log(response)
-// return response.json();        
-// }).then(function (text) {
-// console.log(text); // Print the text as JSON
-// // console.log(JSON.stringify(text)) // Prints the above as plain text in console
-// for (var i = 0; i < text.length; i++) {
-//     var latitude = text[i].latitude;
-//     var longitude = text[i].longitude;
-//     var popupText = `<strong> ${text[i].airport_name}</strong><hr>
-//     <strong>Location:</strong> ${text[i].city}, ${text[i].country}<br>
-//     <strong>Coordinates: </strong>${latitude}, ${longitude}<br>    
-//     <strong>Altitude: </strong>${text[i].altitude}<br>`;
-//     // console.log(latitude);
-//     // console.log(longitude);
-//     if (location) {
-//     L.circleMarker([latitude, longitude], {
-//         stroke: true,        
-//         weight: 1,
-//         color: "#00cc00",
-//         opacity: .4,        
-//         fillColor: "#00ff00",
-//         fillOpacity: 0.4,
-//         radius: (4)
-//     }).addTo(myMap).bindPopup(popupText);          
-//     }
-// }      
-// });
-
-// // fetch traffic density route
-// fetch('/api/v1.0/traffic_density').then(function (response) {
-// // console.log(response)
-// return response.json();      
-// }).then(function (text) {
-// console.log(text); // Print the text as JSON
-// // console.log(JSON.stringify(text)) // Prints the above as plain text in console
-// // for (var i = 0; i < text.length; i++) {
-// //     var aeroport = i;
-// //     var flights = text[i];
-// //     console.log(aeroport);
-// //     console.log(flights)
-// // };
-// //     var longitude = text[i].longitude;
-// //     var popupText = `<strong> ${text[i].airport_name}</strong><hr>
-// //     <strong>Location:</strong> ${text[i].city}, ${text[i].country}<br>
-// //     <strong>Coordinates: </strong>${latitude}, ${longitude}<br>    
-// //     <strong>Altitude: </strong>${text[i].altitude}<br>`;
-//     // console.log(flights);
-// //     // console.log(longitude);
-// //     if (location) {
-// //     L.circleMarker([latitude, longitude], {
-// //         stroke: true,        
-// //         weight: 1,
-// //         color: "#00cc00",
-// //         opacity: .4,        
-// //         fillColor: "#00ff00",
-// //         fillOpacity: 0.4,
-// //         radius: (4)
-// //     }).addTo(myMap).bindPopup(popupText);          
-// //     }
-// // }      
-// });
-
-
-
-// // Heat Map test
-// fetch('/api/v1.0/nycdom_airports').then(function (response) {
-//     // console.log(response)
-//     return response.json();        
-//     }).then(function (text) {
-//     // console.log(text);  
-//     var heatArray = [];  
-//     for (var i = 0; i < text.length; i++) {
-//         var latitude = text[i].latitude;
-//         var longitude = text[i].longitude;
+// Create a baseMaps object.
+var baseMaps = {
+    Street: street,
+    Topography: topo
+};
   
-//         if (location) {
-//             heatArray.push([latitude, longitude]);
-//         }
-//     }
-  
-//     var heat = L.heatLayer(heatArray, {
-//       radius: 20,
-//       blur: 5
-//     }).addTo(myMap);
-// });
+// Create an overlay object.
+var overlayMaps = {
+    "Flight Routes": routesLayer,
+    "Air Traffic": trafficLayer
+};
+
+// Create a map object, and set the default layers.
+var myMap = L.map("map", {
+    center: [40.7128, -74.0060],
+    zoom: 9,
+    layers: [street, routesLayer, trafficLayer]
+});
+
+// Pass our map layers into our layer control.
+// Add the layer control to the map.
+L.control.layers(baseMaps, overlayMaps, {
+    collapsed: false
+}).addTo(myMap);
