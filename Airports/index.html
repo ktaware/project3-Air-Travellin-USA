@@ -33,29 +33,26 @@
         <!-- <p> -->
           <figure class="highcharts-figure">
           <div id="container"></div>
-          <p class="highcharts-description">
+          <p></p>
+          <!-- <p class="highcharts-description">
             Map showing how a TopoJSON map source is handled and how the built-in
             orthographic projection is used.
-          </p>
+          </p> -->
         </figure>
         <!-- </p> -->
     <div class="row">
-      <!-- <div class="col-md-12 jumbotron text-center"> -->
-        
-        
-      <!-- </div> -->
-      
+            
     </div>
     <div class="row">
       <div class="col-md-3">
         <div class="well">
-          <h5>NYC Airports Name:</h5>
+          <h5><b>Select NYC Airports </b></h5>
           <select id="selDataset" onchange="optionChanged(this.value)"></select>
           
         </div>
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Destination with flights count</h3>
+            <h3 class="panel-title">Airline with flights count</h3>
           </div>
           <div id="sample-metadata" class="panel-body"></div>
         </div>
@@ -67,27 +64,13 @@
         <div id="pie"></div>
       </div>
     </div>
-    <!-- <div class="row">
-      <div class="col-md-12">
-        
-        <div id="map">
-         
-        </div>
-        <figure class="highcharts-figure">
-          <div id="container"></div>
-          <p class="highcharts-description">
-            Map showing how a TopoJSON map source is handled and how the built-in
-            orthographic projection is used.
-          </p>
-        </figure>
-      </div>
-    </div> -->
+   
   </div>
 
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="./app.js"></script>
-  <!-- <script src="./static/js/bonus.js"></script> -->
+  
   <script src="https://code.highcharts.com/maps/highmaps.js"></script>
   <script src="https://code.highcharts.com/maps/modules/data.js"></script>
   <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
