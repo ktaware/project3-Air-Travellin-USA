@@ -59,29 +59,12 @@ def airports():
     airports_dict = [columns_to_dict(row) for row in session.query(Airports).all()]
     return jsonify(airports_dict)
 
-
-# Step 3  (Setup NYC to international airports Route)
-@app.route("/api/v1.0/nycint_airports")
-def nycint_airports():  
-    # """Return a JSON representation of a dictionary for airports"""
-    # nyc_airports = [columns_to_dict(row) for row in session.query(Airports).\
-    #                 filter(Airports.airport_id == Dom_Flights.des_airport).all()]
-    # return jsonify(nyc_airports)
-    """Return a JSON representation of a dictionary for airports"""    
-    nycint_airports = [columns_to_dict(row) for row in session.query(Airports).\
-                    filter(or_(Airports.airport_id == Int_Flights.des_airport, 
-                               Airports.airport_id == Int_Flights.dep_airport)).all()]
-    return jsonify(nycint_airports)
-
-
-# Step 4  (Setup NYC to domestic only airports Route)
-@app.route("/api/v1.0/nycdom_airports")
-def nycdom_airports():  
-    """Return a JSON representation of a dictionary for airports"""    
-    nycdom_airports = [columns_to_dict(row) for row in session.query(Airports).\
-                    filter(Airports.airport_id == Dom_Flights.des_airport).all()]
-    return jsonify(nycdom_airports)
-
+# Step 3  (Setup airports Route)
+@app.route("/api/v1.0/airlines")
+def airlines():  
+    """Return a JSON representation of a dictionary for airlines"""
+    airlines_dict = [columns_to_dict(row) for row in session.query(Airlines).all()]
+    return jsonify(airlines_dict)
 
 # Step 5  (Setup NYC flight paths (Flights_Airports) Route)
 @app.route("/api/v1.0/flights_airports")
