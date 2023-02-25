@@ -12,5 +12,7 @@ HTML landing page with 2 pages:
 2. Dashboard: Drop-down filter for airlines
   A. [KOMAL] bar graph of volume of flights for destinations
   B. [NIMRA] pie chart of on-time/late/cancelled flights by airline (web scraped https://jfkairport.net/statistics/)
+  ![image](https://user-images.githubusercontent.com/12514249/221376978-e3d91b42-fffb-4e52-b5dc-234344692093.png)
+
   
 PRESENTATION LINK: https://docs.google.com/presentation/d/1MG3JPl2o1v6_9uyvitNAErBOgpETSVxQZbuoRyTFhaA/edit?usp=sharing
