@@ -1,0 +1,5 @@
+html {
+    height: 100%;
+    background: radial-gradient(ellipse at bottom, #6689d6 0%, #ccd3f5 100%);
+    overflow: hidden;
+  }
