@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>On Top of the Charts</title>
+  <link rel="stylesheet" href="/static/js/globeWebpage.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: hwb(216 63% 8%);
+      margin: 0%;
+      padding: 0.5%;
+    }    
+  </style>
+</head>
+
+<body>    
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h2><strong>Ready for your holiday? Click away to get away!</strong></h2>            
+        </div>
+      </div>
+    </div>     
+  </div>     
+  
+  
+  <div class="row">
+    <div class="col-md-2">
+      <div class="panel panel-primary" style="height: 70px">
+        <div class="panel-heading">
+          <h4 class="panel-title"><strong>Choose Your NYC Airport:</strong></h4>
+        </div>
+        <div class="text-center">
+          <select id="selDataset" style="height: 25px; width: 230px;" onchange="optionChanged(this.value)"></select>
+        </div>
+      </div>      
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title"><strong>Available Destinations</strong></h4>
+        </div>
+        <div id="sample-metadata" class="panel-body" style="height: 410px; overflow-y: scroll;"></div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title"><strong>Top 10 Airlines by Routes Offered</strong></h4>
+        </div>
+        <div id="bar"></div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title"><strong>Top 10 Destination Airports Serviced</strong></h4>
+        </div>
+        <div id="pie"></div>
+      </div>
+    </div>
+  </div>    
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script type="text/javascript" src="static/js/plotly_logic.js"></script>
+  <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+  <script type="text/javascript" src="static/js/globeWebpage.js"></script>
+</body>
+</html>

@@ -17,7 +17,7 @@ function trafficColor(traffic) {
     }
 
 // Define fetchFlights function retrieve data from API
-const fetchCities = ()=>{
+const fetchFlights = ()=>{
     return fetch('/api/v1.0/flights_airports');
 }
 
@@ -25,7 +25,7 @@ const fetchCities = ()=>{
 async function main(){
     try {
         // Declare const res and data variables with await method to force code to wait for API response and data
-        const res = await fetchCities();
+        const res = await fetchFlights();
         const data = await res.json();
         // handle the data from here on out, this will now work ONLY after the data arrival
         console.log(data);

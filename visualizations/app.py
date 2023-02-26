@@ -47,10 +47,20 @@ def columns_to_dict(self):
 #################################################
 # Routes
 #################################################
-# Step 1 (Setup basic Python to Flask)
+# Step 1 (Setup basic Python to Flask Routes to host Site)
 @app.route('/')
 def home_page():    
-    return render_template('index.html')
+    return render_template('index.html')  
+
+# (Setup plotly/charts.html Route)
+@app.route('/plotly')
+def charts_page():    
+    return render_template('charts.html')
+    
+# (Setup leaflet/maps.html Route)
+@app.route('/leaflet')
+def maps_page():    
+    return render_template('maps.html')    
 
 # Step 2  (Setup airports Route)
 @app.route("/api/v1.0/airports")
@@ -59,19 +69,28 @@ def airports():
     airports_dict = [columns_to_dict(row) for row in session.query(Airports).all()]
     return jsonify(airports_dict)
 
-# Step 3  (Setup airports Route)
+# Step 3  (Setup airlines Route)
 @app.route("/api/v1.0/airlines")
 def airlines():  
     """Return a JSON representation of a dictionary for airlines"""
     airlines_dict = [columns_to_dict(row) for row in session.query(Airlines).all()]
     return jsonify(airlines_dict)
 
-# Step 5  (Setup NYC flight paths (Flights_Airports) Route)
+# Step 5  (Setup flights_airpors (NYC Flights Paths) Route)
 @app.route("/api/v1.0/flights_airports")
 def flights_airports():  
     """Return a JSON representation of a dictionary for airports"""    
     flights_paths = [columns_to_dict(row) for row in session.query(Flights_Airports).order_by((Flights_Airports.total).desc()).all()]
     return jsonify(flights_paths)
+
+# Step 5  (Setup nyc_airports Route)
+@app.route("/api/v1.0/nyc_airports")
+def nyc_airports():  
+    """Return a JSON representation of a dictionary for airports"""    
+    nyc_airports_dict = [columns_to_dict(row) for row in session.query(Airports).filter(or_(Airports.airport_id == "EWR", Airports.airport_id == "JFK", Airports.airport_id == "LGA")).all()]
+    return jsonify(nyc_airports_dict)
+    
+
     
 
 # Close session

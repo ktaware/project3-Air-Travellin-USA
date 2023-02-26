@@ -1,15 +1,29 @@
+// Data sources
+const airportsJson = 'http://127.0.0.1:5000/api/v1.0/nyc_airports'
+const airlinesJson = 'http://127.0.0.1:5000/api/v1.0/airlines'
+const flightsJson = 'http://127.0.0.1:5000/api/v1.0/flights_airports'
+
+
 var airports = [];
 var airlines = [];
 var flights = [];
 
 function init() {
-// Fetch the JSON data and console log it
-  d3.csv("https://raw.githubusercontent.com/ktaware/project3/main/data/airports_for_webpage.csv").then(function(_airports) {
+  // fetch all nyc flight paths
+  d3.json(airportsJson).then(function(_airports) {
     airports = _airports;
-    d3.csv("https://raw.githubusercontent.com/ktaware/project3/main/data/raw_data/airlines.csv").then(function(_airlines) {
+    d3.json(airlinesJson).then(function(_airlines) {
       airlines = _airlines;
-      d3.csv("https://raw.githubusercontent.com/ktaware/project3/main/data/06_flights_airports.csv").then(function(_flights) {
-      flights = _flights;  
+      d3.json(flightsJson).then(function(_flights) {
+        flights = _flights;  
+
+
+  // d3.csv("https://raw.githubusercontent.com/ktaware/project3/main/data/airports_for_webpage.csv").then(function(_airports) {
+  //   airports = _airports;
+  //   d3.csv("https://raw.githubusercontent.com/ktaware/project3/main/data/raw_data/airlines.csv").then(function(_airlines) {
+  //     airlines = _airlines;
+  //     d3.csv("https://raw.githubusercontent.com/ktaware/project3/main/data/06_flights_airports.csv").then(function(_flights) {
+  //     flights = _flights;  
       var selector = d3.select("#selDataset");
       airports.forEach((airport) => {
           selector
@@ -48,19 +62,15 @@ function buildairport(airportId) {
     // Use `.html("") to clear any existing metadata
     PANEL.html("");
 
-  // Use `Object.entries` to add each key and value pair to the panel
-  // Hint: Inside the loop, you will need to use d3 to append new
-  // tags for each key-value in the metadata.
+  // Use `Object.entries` to add each key and value pair to the panel 
   Object.entries(destcount).forEach(([key, value]) => {
     PANEL.append("h6").text(`${key}: ${value}`);
   });
 
-
-
     let vals = Object.values(destcount).slice(0, 10).reverse();
     let keys = Object.keys(destcount).slice(0, 10).reverse();
 
-    // 8. Create the trace for the bar chart. 
+    // Create the trace for the bar chart. 
     var barData = [{
       x: keys,
       y: vals,
@@ -69,11 +79,11 @@ function buildairport(airportId) {
       text: "labels"
     }];
 
-    // 9. Create the layout for the bar chart. 
+    // Create the layout for the bar chart. 
     var barLayout = {
      title: {text: "<b> Flights count for each destination </b>"},
     };
-    // 10. Use Plotly to plot the data with the layout. 
+    // Use Plotly to plot the data with the layout. 
     Plotly.newPlot("bar", barData, barLayout);
 
     let piedata = [{
