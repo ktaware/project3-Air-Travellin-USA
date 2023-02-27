@@ -3,7 +3,8 @@ const url = 'http://127.0.0.1:5000/api/v1.0/flights_airports'
 
 // A function to determine the marker size based on the population
 function markerSize(traffic) {
-    return Math.sqrt(traffic) * 500;
+    return Math.sqrt(traffic) * .5;
+    // return Math.sqrt(traffic) * 500;
 }
 
 // Define a trafficColor function to color code markers based on density of air traffic
@@ -15,6 +16,25 @@ function trafficColor(traffic) {
     else if (traffic < 10000) return "#ffaa00";
     else return "#ff0000";
     }
+
+// Define a nycFlights function to provide # of outbound flights from NYC airports
+function nycFlights(id) {
+    if (id == "JFK") return "1962894";
+    else if (id == "EWR") return "1614823";
+    else if (id == "LGA") return "1224668";  
+}   
+
+// Declare airports variable to capture fetched data
+var airports = [];
+
+// Define function to fetch only NYC airport data
+function nycAirportfetch() {    
+    d3.json('http://127.0.0.1:5000/api/v1.0/nyc_airports').then(function(_airports) {
+    airports = _airports;
+    });
+}
+
+nycAirportfetch();
 
 // Define fetchFlights function retrieve data from API
 const fetchFlights = ()=>{
@@ -28,46 +48,59 @@ async function main(){
         const res = await fetchFlights();
         const data = await res.json();
         // handle the data from here on out, this will now work ONLY after the data arrival
-        console.log(data);
+        // Declare variables to hold each airports' routes and flight traffic retrieved via loop functon
         var ewrRoutes = []
         var jfkRoutes = []
         var lgaRoutes = []
         var flightTraffic = []
-        for (var i = 0; i < data.length; i++) {      
+        // Initiate loop to retrieve air traffic and create circleMarkers for all destination airports
+        for (var i = 0; i < data.length; i++) {            
             var des_latitude = data[i].des_latitude;
             var des_longitude = data[i].des_longitude;
             var traffic = data[i].total;
             var popupText = `<strong> ${data[i].des_name} / ${data[i].des_airport_id}</strong><hr>
-            <strong>Total NYC Flights Inbound: </strong>${traffic}<br>
+            <strong>Total Flights Inbound from NYC: </strong>${traffic}<br>
             <strong>Location:</strong> ${data[i].des_city}, ${data[i].des_country}<br>
             <strong>Coordinates: </strong>${des_latitude}, ${des_longitude}<br>
-            <strong>Altitude: </strong>${data[i].des_altitude}<br>`;            
+            <strong>Altitude: </strong>${data[i].des_altitude}m<br>`;            
             flightTraffic.push((
-                L.circle([des_latitude, des_longitude], {
+                L.circleMarker([des_latitude, des_longitude], {
                 stroke: true,        
-                weight: 2,
+                weight: 1,
                 color: "#ffffff",
                 opacity: .9,        
                 fillColor: trafficColor(traffic),
                 fillOpacity: 0.08,
                 radius: markerSize(traffic)
-            }).bindPopup(popupText))
-            // ,(
-            //     L.circle([data[i].dep_latitude, data[i].dep_longitude], {
-            //     stroke: true,        
-            //     weight: 2,
-            //     color: "#ffffff",
-            //     opacity: .9,        
-            //     fillColor: "#ff00ff",
-            //     fillOpacity: 0.02,
-            //     radius: 20000
-            // }).bindPopup(`<strong> ${data[i].dep_name} / ${data[i].dep_airport_id}</strong><hr>
-            // <strong>Total Flights Outbound: </strong>${traffic}<br>
-            // <strong>Location:</strong> ${data[i].dep_city}, ${data[i].dep_country}<br>
-            // <strong>Coordinates: </strong>${data[i].dep_latitude}, ${data[i].dep_longitude}<br>`))
+                }).bindPopup(popupText))
             );             
         }
 
+        // Initiate loop to retrieve air traffic and create circleMarkers for all NYC airports
+        for (var i = 0; i < airports.length; i++) {              
+            var latitude = airports[i].latitude;
+            var longitude = airports[i].longitude;        
+            var outbound = nycFlights(airports[i].airport_id)
+            console.log(outbound)
+            var popupText = `<strong> ${airports[i].airport_name} / ${airports[i].airport_id}</strong><hr>
+            <strong>Total Flights Outbound: </strong>${outbound}<br>
+            <strong>Location:</strong> ${airports[i].city}, ${airports[i].country}<br>
+            <strong>Coordinates: </strong>${latitude}, ${longitude}<br>
+            <strong>Altitude: </strong>${airports[i].altitude}m<br>`;            
+            flightTraffic.push((
+                L.circleMarker([latitude, longitude], {
+                stroke: true,        
+                weight: 1,
+                color: "#000000",
+                opacity: .9,        
+                fillColor: "#00fff0",                
+                fillOpacity: 0.5,
+                radius: 5                
+                }).bindPopup(popupText))
+            );
+        }
+
+        // Initiate loop to retrieve all flight routes departing from NYC airports
         for (var i=0; i < data.length; i++) {            
             var lat1 = data[i].dep_latitude;
             var lng1 = data[i].dep_longitude;
@@ -195,16 +228,3 @@ async function main(){
 }
 
 main();
-
-// const fetchCities = ()=>{
-//     return fetch('/api/v1.0/flights_airports');
-// }
-// function main(){
-//     fetchCities()
-//     .then(res => res.json())
-//     .then(data => {
-//         // handle the data here, all you code should be here
-//     })
-//     .catch (err => console.log(err));
-// }
-// main();

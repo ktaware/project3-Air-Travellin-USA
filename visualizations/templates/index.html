@@ -5,42 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>NYC Flight Center</title>
+
+  <!-- Globe CSS -->    
   <link rel="stylesheet" href="/static/css/globe.css" />
+
+  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <style>
     body {
       background-color: hwb(0 100% 0%);
       margin: 0%;
       padding: 0.5%;
-    }
-    .demo-wrap {
-      position: relative;
-    }
-
-    .demo-wrap:before {
-      content: ' ';
-      display: block;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.2;
-      background-image: url('https://images.pulsewebcontent.com/photos/2022/10_Oct/800/BeachBoys1962Getty800_10_22.jpg'); height: 100vh');
-      background-repeat: no-repeat;
-      background-position: 50% 0;
-      background-size: cover;
-    }
-
-    .demo-content {
-      position: center;
-      margin: 1%;
-      font-weight: bold;
-      color: #000000; 
-    }
+    }    
     
     a:link, a:visited {
-      background-color: #f44336;
+      background-color: #c63228;
       color: white;
       padding: 14px 25px;
       text-align: center;
@@ -49,7 +28,7 @@
     }
 
     a:hover, a:active {
-      background-color: red;
+      background-color: rgb(1, 0, 0);
     }
   </style>
 </head>
@@ -61,27 +40,18 @@
   <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
   <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
   <script type="text/javascript" src="static/js/globe_logic.js"></script>
-
   <div class="row">
-    <div class="col-md-6 text-center">
-      <h3>Button to Buttons</h3>
+    <div class="col-md-6 text-left">
+      <h2><strong>Let's go Flying!</h2></strong>          
+          <p>Feel free to spin the globe to the right while we decide where to go. <br>
+          Once you find yor spot, let's figure out which Airport we'll be flying out of and which airline to go with!<br></p>
+      <h2><strong>Button to Buttons</h2></strong>
           <p>For an interactive Map of your local airports, their flight routes, destinations and what exactly you are getting into, check out our Maps section.</p>
-          <a href="http://127.0.0.1:5000/leaflet" target="_blank">Maps</a><br>
+          <p><a href="http://127.0.0.1:5000/leaflet">Maps</a><br><br></p>
           <p>Once you decide on your airport, take a look at some detailed graphs to learn about which airlines fly out of there and which cities they serve. Maybe it'll guide you to your destination?</p>
-          <a href="http://127.0.0.1:5000/plotly" target="_blank">Charts</a>      
-      <div class="demo-wrap" style="height: 600px">        
-        <div class="demo-content">
-          <h1>Hello World!</h1>
-          <p>Let's go Flying!<br>
-          Feel free to spin the globe while we decide where to go. <br>
-          Once you find yor spot, let's figure out which Airport we'll be flying out of and which airline to go with!<br>  
-          <h3>Button to Buttons</h3>
-          <p>For an interactive Map of your local airports, their flight routes, destinations and what exactly you are getting into, check out our Maps section.</p>
-          <a href="http://127.0.0.1:5000/leaflet" target="_blank">Maps</a><br>
-          <p>Once you decide on your airport, take a look at some detailed graphs to learn about which airlines fly out of there and which cities they serve. Maybe it'll guide you to your destination?</p>
-          <a href="http://127.0.0.1:5000/plotly" target="_blank">Charts</a>
-        </div>
-      </div>      
+          <p><a href="http://127.0.0.1:5000/plotly">Charts</a><br><br></p>      
+          <p>And before you commit, maybe double check those delay stats, yeah?</p>
+          <p><a href="http://127.0.0.1:5000/piechart">Delays</a></p>
     </div>
     <div class="col-md-6 text-center">
       <div id="container" style="height: 600px"></div>      

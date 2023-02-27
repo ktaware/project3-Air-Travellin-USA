@@ -60,7 +60,12 @@ def charts_page():
 # (Setup leaflet/maps.html Route)
 @app.route('/leaflet')
 def maps_page():    
-    return render_template('maps.html')    
+    return render_template('maps.html')  
+
+# (Setup piechart/delays.html Route)
+@app.route('/piechart')
+def delays_page():    
+    return render_template('delays.html')    
 
 # Step 2  (Setup airports Route)
 @app.route("/api/v1.0/airports")

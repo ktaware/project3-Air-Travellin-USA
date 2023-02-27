@@ -1,9 +1,9 @@
-DROP TABLE IF EXISTS airlines CASCADE;
 DROP TABLE IF EXISTS airports CASCADE;
+DROP TABLE IF EXISTS airlines CASCADE;
 DROP TABLE IF EXISTS dom_flights CASCADE;
 DROP TABLE IF EXISTS int_flights CASCADE;
-DROP TABLE IF EXISTS flight_routes CASCADE;
 DROP TABLE IF EXISTS flights_airports CASCADE;
+DROP TABLE IF EXISTS jfk_data CASCADE;
 
 
 -------------------------------------------
@@ -72,24 +72,7 @@ CREATE TABLE int_flights (
 	
 
 -------------------------------------------
--- Create all global flight routes table not limited to NYC to import data
-CREATE TABLE flight_routes (
-	index INTEGER,
-	airline_id VARCHAR(10),	
-	dep_airport_id VARCHAR(10),
-	des_airport_id VARCHAR(10),
-	stops INTEGER,
-	PRIMARY KEY (index)
--- 	FOREIGN KEY (airline_id) REFERENCES airlines(airline_id),
--- 	FOREIGN KEY (dep_airport_id) REFERENCES airports(airport_id),
--- 	FOREIGN KEY (des_airport_id) REFERENCES airports(airport_id)
-	);
-	
-	SELECT * FROM flight_routes;
-	
-	
--------------------------------------------
--- Create all global flight routes table not limited to NYC to import data
+-- Create all global flight routes from NYC table to import data
 CREATE TABLE flights_airports (
 	airline_id VARCHAR(10),	
 	dep_airport_id VARCHAR(10),
@@ -112,3 +95,16 @@ CREATE TABLE flights_airports (
 	);
 	
 	SELECT * FROM flights_airports;
+	
+-------------------------------------------
+-- Create JFK flight delay table to import data
+CREATE TABLE jfk_data (
+	airline_name VARCHAR(70),	
+	ontime INTEGER,
+	late INTEGER,
+	very_late INTEGER,
+	cancelled INTEGER,	
+	Primary KEY (airline_name)
+	);
+	
+	SELECT * FROM jfk_data;
