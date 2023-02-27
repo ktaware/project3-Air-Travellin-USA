@@ -1,6 +1,6 @@
-# project3-team6
+# Project 3 - Team 6 - Air Travellin' USA
 
-Air Travellin' USA
+
 
 Scenario: Best airlines to be a member of if we live in NYC (regardless of price) to take advantage of the most frequent flights & most numerous locations
 
