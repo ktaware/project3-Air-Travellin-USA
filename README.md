@@ -7,6 +7,36 @@ Scenario: Best airlines to be a member of if we live in NYC (regardless of price
 **HTML landing page with button links**
 ![image](https://user-images.githubusercontent.com/115741217/221711264-0afddc54-4439-40dc-9898-f47da06d4ad6.png)
 
+**Pre-Work (Cleaning, postgres, sqlAlchemy, Flask)**
+- **A. Cleaning**    
+    - Raw .csvs (***airlines, airports, flight_data, international_report_departures, routes***) are imported into jupyter and cleaned via Pandas' drop, rename, sum, functions.            
+    - Cleaned .csvs saved ino ***data*** folder
+        - A new ***flights_airports.csv*** was also created by joining the cleaned versions of ***dom_flights, int_flights and airports** (see Map Visuals section A and B for more)
+        - **Note** data_csv_cleaning notebook for cleaning can be found in ***cleaning*** folder
+
+- **B. SQL/SQLAlchemy**
+    - ***airtravel_db_table_schemata.sql** created using postGres establishing tables for each respective .csv with column name, type and length.
+        - Cleaned csvs are imported into airtravel_db in sequential order and are now hosted on a server.
+        - airtravel_erd.sql created illustrating table relations.
+        - Jupyter Notebook with sqlAlchemy imports is used to explore the newly created database.
+
+- **C. Flask**
+    - **Setup**
+        - ***app.py** created in VS Code by way of sqlalchemy and flask imports.
+        - engine created to reference ***airtravel_db*** on postgres server
+        - Tables within database are reflected and references saved.
+        - Session connecting to server initialized.
+        - a columns_to_dict function was created to convert tables into usable format.
+        - Jupyter Notebook with sqlAlchemy imports is used to explore the newly created database.
+    - **Routes**
+        - established routes for all main pages to be hosted on user interface side (index, charts, maps, delays and its subpages ontime, late, cancelled)
+        - created airports route to host airport table data in jsonified format for use within javascript.
+            - same process was applied to subsequent airlines, flights_airports, jfk_data tables
+                - a new nyc_airports table and route is created filtering for solely NYC airports
+    - **Initialize**
+        - Session is closed and the app is initialized with .run. API is now up and running. Ready for use.
+        
+        
 **1. Map visual**
 ![image](https://user-images.githubusercontent.com/115741217/221711315-f49d57e7-d4a6-40f7-af9e-59b9d3454f08.png)
 
