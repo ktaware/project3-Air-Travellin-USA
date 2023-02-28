@@ -4,7 +4,7 @@
 
 Scenario: Best airlines to be a member of if we live in NYC (regardless of price) to take advantage of the most frequent flights & most numerous locations
 
-HTML landing page with button links to: 
+**HTML landing page with button links**
 ![image](https://user-images.githubusercontent.com/115741217/221711264-0afddc54-4439-40dc-9898-f47da06d4ad6.png)
 
 **1. Map visual**
