@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>NYC Airport Flights According Destination</title>
+  <link rel="stylesheet" href="globeWebpage.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: hwb(216 63% 8%);
+    }
+
+    .jumbotron {
+      background: #3729f0 linear-gradient(#6687ba, #fae6ca);
+      background-size: 100% 100%;
+      overflow: auto;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <div class="col-md-12 jumbotron text-center">
+    <h3>Ready for holiday Let's go for it</h3>
+    <!-- <p>NYC Airport Info According To Destination</p>     -->
+        <!-- <p> -->
+          <figure class="highcharts-figure">
+          <div id="container"></div>
+          <p></p>
+          <!-- <p class="highcharts-description">
+            Map showing how a TopoJSON map source is handled and how the built-in
+            orthographic projection is used.
+          </p> -->
+        </figure>
+        <!-- </p> -->
+    <div class="row">
+            
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="well">
+          <h5><b>Select NYC Airports </b></h5>
+          <select id="selDataset" onchange="optionChanged(this.value)"></select>
+          
+        </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Airline with flights count</h3>
+          </div>
+          <div id="sample-metadata" class="panel-body"></div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div id="bar"></div>
+      </div>
+      <div class="col-md-4">
+        <div id="pie"></div>
+      </div>
+    </div>
+   
+  </div>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="./app.js"></script>
+  
+  <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+  
+  
+  
+  <script src="./globeWebpage.js"></script>
+  
+</body>
+
+</html>
