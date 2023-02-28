@@ -35,6 +35,7 @@ B. [TERRY] **Markers for each airport indicating the busiest airports/destinatio
         
   
 2. Dashboard: Drop-down filter for airports
+
 A. [KOMAL] bar graph of volume of flights for destinations
 For globe The files are hosted from Amazon CloudFront, which distributes them to edge locations all over the world for fast access and reliability. 
 https://code.highcharts.com/
