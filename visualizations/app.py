@@ -25,9 +25,8 @@ Base.prepare(autoload_with=engine)
 # Save reference to the table
 Airlines = Base.classes.airlines
 Airports = Base.classes.airports
-Dom_Flights = Base.classes.dom_flights
-Int_Flights = Base.classes.int_flights
 Flights_Airports = Base.classes.flights_airports
+JFK_Data = Base.classes.jfk_data
 
 # Create session (link) from Python to the DB 
 session = Session(engine)
@@ -94,6 +93,13 @@ def nyc_airports():
     """Return a JSON representation of a dictionary for airports"""    
     nyc_airports_dict = [columns_to_dict(row) for row in session.query(Airports).filter(or_(Airports.airport_id == "EWR", Airports.airport_id == "JFK", Airports.airport_id == "LGA")).all()]
     return jsonify(nyc_airports_dict)
+
+# Step 6  (Setup jfk_data Route)
+@app.route("/api/v1.0/jfk_data")
+def jfk_data():  
+    """Return a JSON representation of a dictionary for airports"""    
+    jfk_data_dict = [columns_to_dict(row) for row in session.query(JFK_Data).all()]
+    return jsonify(jfk_data_dict)
     
 
     

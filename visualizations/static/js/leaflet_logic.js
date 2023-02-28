@@ -213,7 +213,7 @@ async function main(){
         // Create a map object, and set the default layers.
         var myMap = L.map("map", {
             center: [40.7128, -74.0060],
-            zoom: 9,
+            zoom: 10,
             layers: [street, jfkLayer, trafficLayer]
         });
 

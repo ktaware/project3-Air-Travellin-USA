@@ -11,6 +11,10 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+  <!-- Font Awesome JS -->
+  <script src="https://kit.fontawesome.com/64c2c79e42.js" crossorigin="anonymous"></script>  
+
   <style>
     body {
       background-color: hwb(0 100% 0%);
@@ -30,10 +34,15 @@
     a:hover, a:active {
       background-color: rgb(1, 0, 0);
     }
+
+    i {
+      display: inline-block;
+      width: 50px;
+    }
   </style>
 </head>
 
-<body>
+<body>  
   <script src="https://d3js.org/d3.v5.min.js"></script>    
   <script src="https://code.highcharts.com/maps/highmaps.js"></script>
   <script src="https://code.highcharts.com/maps/modules/data.js"></script>
@@ -41,17 +50,26 @@
   <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
   <script type="text/javascript" src="static/js/globe_logic.js"></script>
   <div class="row">
-    <div class="col-md-6 text-left">
-      <h2><strong>Let's go Flying!</h2></strong>          
-          <p>Feel free to spin the globe to the right while we decide where to go. <br>
-          Once you find yor spot, let's figure out which Airport we'll be flying out of and which airline to go with!<br></p>
-      <h2><strong>Button to Buttons</h2></strong>
-          <p>For an interactive Map of your local airports, their flight routes, destinations and what exactly you are getting into, check out our Maps section.</p>
-          <p><a href="http://127.0.0.1:5000/leaflet">Maps</a><br><br></p>
-          <p>Once you decide on your airport, take a look at some detailed graphs to learn about which airlines fly out of there and which cities they serve. Maybe it'll guide you to your destination?</p>
+    <div class="col-md-12 text-center">
+      <div class="panel panel-primary">        
+        <div class="panel-heading">
+          <h2><strong>Hey Ho! Let's Go...Flying!</strong></h2>
+          <p>Feel free to spin the globe below while we decide where to go. Then we can figure out your airport and airline.<br>            
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 text-left">      
+      <h2><strong>Buttons to Button</h2></strong>
+      <ul class="list-unstyled">
+          <li><i class="fa-solid fa-book-atlas fa-2x"></i>For an interactive Map of your local airports, their flight routes, destinations and what exactly you are getting into, check out our Maps section.</li>
+          <p><a href="http://127.0.0.1:5000/leaflet">Tracks</a><br><br></p>
+          <li><i class="fa-solid fa-plane-departure fa-2x"></i>Once you decide on your airport, take a look at some detailed graphs to learn about which airlines fly out of there and which cities they serve. Maybe it'll guide you to your destination?</li>
           <p><a href="http://127.0.0.1:5000/plotly">Charts</a><br><br></p>      
-          <p>And before you commit, maybe double check those delay stats, yeah?</p>
-          <p><a href="http://127.0.0.1:5000/piechart">Delays</a></p>
+          <p><i class="fa-solid fa-business-time fa-2x"></i>And before you commit, maybe double check those delay stats, yeah?</p>
+          <p><a href="http://127.0.0.1:5000/piechart">Fidelity</a></p>
+      </ul>
     </div>
     <div class="col-md-6 text-center">
       <div id="container" style="height: 600px"></div>      
