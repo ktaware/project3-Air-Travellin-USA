@@ -39,15 +39,15 @@ B. [TERRY] **Markers for each airport indicating the busiest airports/destinatio
 A. [KOMAL] bar graph of volume of flights for destinations- **
 - **For globe:** -The files are hosted from Amazon CloudFront, which distributes them to edge locations all over the world for fast access and reliability. 
 - https://code.highcharts.com/
+- https://ktaware.github.io/project3/
 
 ![image](https://user-images.githubusercontent.com/115741217/221711366-b436ec75-5a69-4edc-bfbb-ce786df35e4e.png)
 
 
 
+B. [NIMRA] pie chart of on-time/late/cancelled flights by airline (web scraped https://jfkairport.net/statistics/)
 
 ![image](https://user-images.githubusercontent.com/115741217/221711380-2a82c962-49b9-425c-85cb-7285a37d2e91.png)
-
-B. [NIMRA] pie chart of on-time/late/cancelled flights by airline (web scraped https://jfkairport.net/statistics/)
 
 
   
