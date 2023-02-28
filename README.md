@@ -16,19 +16,21 @@ First, with the cleaned data, the international and domestic flight data was com
 The data was then read in JS and a loop was created to look at each flight's beginning and ending coordatinates. Using the curve plugin, a midpoint was needed to draw the curve, so some calculations are done for each departure/destination pair to determine a midpoint. Based on the departing airport, a colour was assigned to each of the 3 NYC airports, and then the curve was plotted. A popup with the details was then added to each curve.
    
 B. [TERRY] **Markers for each airport indicating the busiest airports/destinations by colour/size.**
-    -**Source Data:**
-        -Using the ***Airports_Flights*** table (domestic + International flights & airports) stored on the postgres server and hosted as an API via Flask. 
-    -**Marker Creation Process:**
-        -By calling a fetchFlights function on the ***Airports_Flights*** table and running it through an ***async function main()*** with a time delay to allow the data to catchup to the call, we were able to parse and store the jasonified data in a const variable.
-        -The ***data*** const was then looped through to isolate destination airport latitudes and longitudes originating from the NYC airports.
-            -At the same time, metadata was also retrieved and stored in an overarching ***popupText*** variable
-        -Using the retrieved location data, we were able to push ***L.circleMarkers*** to a ***flightTraffic*** container variable and the .***.bindPopup*** method was appied with the popupText data in the process
-        -A second fetch function (***nycAirportfetch***) of a filtered version of ***Airports_Flights*** called ***nyc_airports*** was also run and the data captured as the ***airports*** variable. A loop was run on ***airports*** to capture its location and popup data in the same way as above and pushed to the same ***flightTraffic*** container.
-    **Leaflet Layers:**
-        -To begin the base layers and corresponding baseMaps object were declared and the map object created.
-        -The ***flightTraffic*** layer container was added to the layer groups and ultimately the overlayMaps object.
-        -baseMaps and overlayMaps were passed to laer control.
-        -Finally, the asynced main function was called and initiated.
+   - **Source Data:**
+      - Using the ***Airports_Flights*** table (domestic + International flights & airports) stored on the postgres server and hosted as an API via Flask. 
+
+   - **Marker Creation Process:**
+      - By calling a fetchFlights function on the ***Airports_Flights*** table and running it through an ***async function main()*** with a time delay to allow the data to catchup to the call, we were able to parse and store the jasonified data in a const variable.
+      - The ***data*** const was then looped through to isolate destination airport latitudes and longitudes originating from the NYC airports.
+      - At the same time, metadata was also retrieved and stored in an overarching ***popupText*** variable
+      - Using the retrieved location data, we were able to push ***L.circleMarkers*** to a ***flightTraffic*** container variable and the .***.bindPopup*** method was appied with the popupText data in the process.
+      - A second fetch function (***nycAirportfetch***) of a filtered version of ***Airports_Flights*** called ***nyc_airports*** was also run and the data captured as the ***airports*** variable. A loop was run on ***airports*** to capture its location and popup data in the same way as above and pushed to the same ***flightTraffic*** container.
+      
+   - **Leaflet Layers:**
+      - To begin the base layers and corresponding baseMaps object were declared and the map object created.
+      - The ***flightTraffic*** layer container was added to the layer groups and ultimately the overlayMaps object.
+      - baseMaps and overlayMaps were passed to laer control.
+      - Finally, the asynced main function was called and initiated.
         
         
   
