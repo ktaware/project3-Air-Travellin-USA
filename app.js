@@ -4,11 +4,11 @@ var flights = [];
 
 function init() {
 // Fetch the JSON data and console log it
-  d3.csv("https://raw.githubusercontent.com/ktaware/project3/main/data/airports_for_webpage.csv").then(function(_airports) {
-    airports = _airports;
-    
-      d3.csv("https://raw.githubusercontent.com/ktaware/project3/main/data/05_flights_airports.csv").then(function(_flights) {
-      flights = _flights;  
+d3.csv("https://raw.githubusercontent.com/ktaware/project3/main/airports_for_webpage.csv").then(function(_airports) {
+  airports = _airports;
+  
+    d3.csv("https://raw.githubusercontent.com/ktaware/project3/main/data/05_flights_airports.csv").then(function(_flights) {
+    flights = _flights;   
       var selector = d3.select("#selDataset");
       airports.forEach((airport) => {
           selector
@@ -16,7 +16,7 @@ function init() {
           .text(airport.name)
           .property("value", airport.name);
         });
-      var firstairport = airports[0];
+      var firstairport = airports[0].airport_id;
       buildairport(firstairport );
      });
     
