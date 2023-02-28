@@ -17,6 +17,9 @@
 
   <!-- Our Pie Chart JS-->  
   <script type="text/javascript" src="static/js/piechart.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     
   <style>
     body {
@@ -27,13 +30,23 @@
   </style>    
 </head>
 
-<body onload="main()">
+<body>
   <div class="row">
     <div class="col-md-12 text-center">
       <div class="panel panel-primary">        
         <div class="panel-heading">
           <h2><strong>JFK Airport Arrivals - Airliner Status Analysis (January 2023)</strong></h2>          
+          <div class="dropdown" >
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select the Flights
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a tabindex="-1" href="ontime">On-Time Flight by Airline</a></li>
+              <li><a tabindex="-1" href="late">Late Flight by Airline</a></li>
+              <li><a tabindex="-1" href="cancelled">Cancelled Flight by Airline</a></li>
+            </ul>
+            </div>
         </div>
+        <h5>Choose a Flight Status from the dropdown menu above to see an airline's timeliness.</h5>
         <div>
           <svg  width = "625" height = "625"></svg>
         </div>

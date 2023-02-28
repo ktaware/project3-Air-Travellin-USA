@@ -66,6 +66,21 @@ def maps_page():
 def delays_page():    
     return render_template('delays.html')    
 
+# (Setup piechart/delays.html Route)
+@app.route('/ontime')
+def ontime_page():    
+    return render_template('ontime.html')    
+
+# (Setup piechart/delays.html Route)
+@app.route('/late')
+def late_page():    
+    return render_template('late.html')    
+
+# (Setup piechart/delays.html Route)
+@app.route('/cancelled')
+def cancelled_page():    
+    return render_template('cancelled.html')    
+
 # Step 2  (Setup airports Route)
 @app.route("/api/v1.0/airports")
 def airports():  

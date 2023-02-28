@@ -221,10 +221,36 @@ async function main(){
         // Add the layer control to the map.
         L.control.layers(baseMaps, overlayMaps, {
             collapsed: false
-        }).addTo(myMap);        
+        }).addTo(myMap);
+
+        // Declare and set up the legend
+        var legend = L.control({
+            position: "bottomright" 
+        });            
+
+        // Provide legend information and labels
+        legend.onAdd = function() {
+            var div = L.DomUtil.create("div", "info legend");            
+            var airTraffic = [1, 500, 1000, 2500, 5000, 10000];            
+            var colors = ["#00ff00", "#ccff00", "#ffff00", "#ffdd00", "#ffaa00", "#ff0000"];
+            var labels = [];
+              
+            // Reference css to format legend
+            for (var i = 0; i < airTraffic.length; i++) {
+            labels.push(
+                "<i style ='background: " + colors[i] + "'></i> " + 
+                airTraffic[i] + (airTraffic[i + 1] ? "&ndash;" + airTraffic[i + 1] + "<br>" : "+")
+            )
+            }       
+            // Use .join to add pushed label information to legend and add to the created div for the legend 
+            div.innerHTML = labels.join('');
+            return div;
+        }  
     } catch (err) {
         console.log(err);
     }
+    // Add the legend to the map
+    legend.addTo(myMap);  
 }
 
 main();

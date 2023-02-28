@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Fresh Prince of Delayed Air</title>
+
+  <!-- Our CSS -->    
+  <link rel="stylesheet" href="static/css/style.css"/>
+
+  <!-- Bootstrap CSS -->    
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <!-- D3 library -->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+
+  <!-- Our Pie Chart JS-->  
+  <script type="text/javascript" src="static/js/piechart.js"></script>
+  
+  <style>
+    body {
+      background-color: hwb(216 63% 8%);
+      margin: 0%;
+      padding: 0.5%;
+    }    
+  </style>   
+</head>
+
+<body onload="Cancelled()">
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<div class="panel panel-primary">        
+				<div class="panel-heading">
+					<h2><strong>JFK Airport Arrivals - Airliner Status Analysis (January 2023)</strong></h2>
+					<h4>Cancelled Flight by Airline</h4>				
+        		</div>
+        		<div>
+					<svg  width = "700" height = "700"></svg>
+				</div>
+			</div>
+	</div>
+</div>
+</body>
+</html>

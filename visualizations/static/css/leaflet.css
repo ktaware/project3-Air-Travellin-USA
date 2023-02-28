@@ -6,3 +6,20 @@ body {
   height: 100%;
   width: 100vw;
   }
+
+.legend {
+  padding: 7px 7px 7px 7px;
+  text-align: left;
+  line-height: 18px;
+  background: white;
+  opacity: 1;
+  border-radius: 5%;
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 2px;
+  opacity: .6;
+}
