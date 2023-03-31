@@ -70,7 +70,7 @@ B. **Markers for each airport indicating the busiest airports/destinations by co
 **A. Bar graph of volume of flights for destinations**
 - **For globe:** -The files are hosted from Amazon CloudFront, which distributes them to edge locations all over the world for fast access and reliability. 
 - https://code.highcharts.com/
-- https://ktaware.github.io/project3/
+- https://ktaware.github.io/project3-Air-Travellin-USA/
 
 ![image](https://user-images.githubusercontent.com/115741217/221711366-b436ec75-5a69-4edc-bfbb-ce786df35e4e.png)
 
